@@ -53,8 +53,21 @@ class Grid {
     }
   }
 
-  blockVal(r,c) {
-    return this.grid[r][c].val();
+  blockVal(id) {
+    let index = this.parseID(id);
+    let row = index[0];
+    let col = index[1];
+    return this.grid[row][col].val();
+  }
+
+  isAdjacent(id1, id2) {
+    let index1 = this.parseID(id1);
+    let index2 = this.parseID(id2); 
+    if(Math.abs(index1[0] - index2[0]) <= 1 && Math.abs(index1[1] - index2[1]) <= 1) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   forEach(callback) {
@@ -64,6 +77,12 @@ class Grid {
       }
     }
     return this.grid;
+  }
+
+  parseID(id) {
+    let row = Math.floor(id/this.rows);
+    let col = id%this.rows;
+    return [row,col];
   }
 
 }

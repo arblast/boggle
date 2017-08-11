@@ -1,3 +1,7 @@
+html {
+  font-style: sans-serif;
+}
+
 body {
   text-align: center;
   background-color: #F57921;
@@ -54,12 +58,27 @@ button:focus {
 }
 
 .block {
+  font-weight: bold;
+  display: flex;
   height: 40px;
   width: 40px;
   background-color: white;
   margin: 5px;
   border-radius: 5px;
   box-shadow: -2px 2px 5px black;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  transition: color 0.8s ease, background-color 0.5s ease;
+  cursor: pointer;
+}
+
+.current-label {
+  font-weight: bold;
+}
+
+#current {
+  display: inline;
 }
 
 .submit-container {
@@ -84,6 +103,10 @@ button:focus {
 .word-column {
   text-align: left;
   width: 200px;
+}
+
+.selected {
+  background-color: #AACEEC;
 }
 
 #total {
