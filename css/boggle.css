@@ -1,0 +1,63 @@
+body {
+  text-align: center;
+  background-color: #F57921;
+}
+
+.logo {
+  background: url("../images/logo.png") center no-repeat;
+  background-size: contain;
+  height: 100px;
+  margin: 30px;
+}
+
+.grid {
+  display: inline-flex;
+  align-self: center;
+  flex-direction: column;
+  background-color: #398BD4;
+  border: 5px solid #FFCA08;
+  margin-bottom: 20px;
+}
+
+.row {
+  display: flex;
+  margin-left: 7px;
+  margin-right: 7px;
+}
+
+.row:first-of-type {
+  margin-top: 7px;
+}
+
+.row:last-of-type {
+  margin-bottom: 7px;
+}
+
+.block {
+  height: 40px;
+  width: 40px;
+  background-color: white;
+  margin: 5px;
+  border-radius: 5px;
+  box-shadow: -2px 2px 5px black;
+}
+
+.submit-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.score-table {
+  border-collapse: collapse;
+  background-color: white;
+  margin: 20px auto;
+}
+
+.score-table th, td {
+  border: 5px solid #FFCA08;
+}
+
+#total {
+  background-color: lightgray;
+}
