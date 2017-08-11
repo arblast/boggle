@@ -3,6 +3,26 @@ body {
   background-color: #F57921;
 }
 
+button {
+  border-radius: 5px;
+  background-color: white;
+  border-style: solid;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: lightgray;
+}
+
+button:active {
+  background-color: #AACEEC;
+  border-color: #AACEEC;
+}
+
+button:focus {
+  outline: none;
+}
+
 .logo {
   background: url("../images/logo.png") center no-repeat;
   background-size: contain;
@@ -44,8 +64,10 @@ body {
 
 .submit-container {
   display: flex;
+  margin: 0 auto;
+  width: 350px;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
 }
 
 .score-table {
@@ -56,6 +78,12 @@ body {
 
 .score-table th, td {
   border: 5px solid #FFCA08;
+  padding: 5px;
+}
+
+.word-column {
+  text-align: left;
+  width: 200px;
 }
 
 #total {
