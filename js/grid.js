@@ -53,6 +53,10 @@ class Grid {
     }
   }
 
+  blockVal(r,c) {
+    return this.grid[r][c].val();
+  }
+
   forEach(callback) {
     for(let r = 0; r < this.rows; r++) {
       for(let c = 0; c < this.columns; c++) {

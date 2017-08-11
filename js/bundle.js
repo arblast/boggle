@@ -45,13 +45,19 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	const Grid = __webpack_require__(1);
+	const NUM_ROWS = 5;
+	const NUM_COLS = 5;
 	
 	document.addEventListener("DOMContentLoaded", () => {
-	  let grid = new Grid(5,5);
-	  console.log(grid.diceArray);
+	
+	  const blocks = document.getElementsByClassName('block');
+	  let grid = new Grid(NUM_ROWS,NUM_COLS);
 	  grid.placeDice();
-	  console.log(grid.diceArray);
-	  window.g = grid.grid;
+	  for(let r = 0; r < NUM_ROWS; r++) {
+	    for(let c = 0; c < NUM_COLS; c++) {
+	      blocks[r*NUM_COLS + c].innerHTML = grid.blockVal(r,c);
+	    }
+	  }
 	});
 
 
@@ -114,6 +120,10 @@
 	    }
 	  }
 	
+	  blockVal(r,c) {
+	    return this.grid[r][c].val();
+	  }
+	
 	  forEach(callback) {
 	    for(let r = 0; r < this.rows; r++) {
 	      for(let c = 0; c < this.columns; c++) {
@@ -143,6 +153,14 @@
 	
 	  roll() {
 	    this.value = randArray(this.sides);
+	  }
+	
+	  val() {
+	    if(this.value === "q") {
+	      return "Qu";
+	    } else {
+	      return this.value.toUpperCase();
+	    }
 	  }
 	}
 	

@@ -10,6 +10,14 @@ class Dice {
   roll() {
     this.value = randArray(this.sides);
   }
+
+  val() {
+    if(this.value === "q") {
+      return "Qu";
+    } else {
+      return this.value.toUpperCase();
+    }
+  }
 }
 
 module.exports = Dice;
