@@ -1,14 +1,33 @@
 const Grid = require('./grid.js');
 const NUM_ROWS = 5;
 const NUM_COLS = 5;
+const SCORE = {
+  1: 0,
+  2: 0,
+  3: 1,
+  4: 1,
+  5: 2,
+  6: 3,
+  7: 5,
+  8: 11
+}
+
+const HIGHEST_SCORE_LENGTH = 8;
 
 document.addEventListener("DOMContentLoaded", () => {
 
   let selectedBlocks = [];
   let selectedWord = [];
+  let totalScore = 0;
   const htmlGrid = document.getElementById("grid");
   const blocks = document.getElementsByClassName('block');
   const currentDisplay = document.getElementById("current");
+  const error = document.getElementById('error');
+  const submit = document.getElementById('submit');
+  const scoreTable = document.getElementById('score').getElementsByTagName('tbody')[0];
+  const total = document.getElementById('total');
+  const totalScoreDisplay = document.getElementById('totalScoreDisplay');
+
   let grid = new Grid(NUM_ROWS,NUM_COLS);
   grid.placeDice();
 
@@ -18,9 +37,10 @@ document.addEventListener("DOMContentLoaded", () => {
     setTimeout(() => {htmlBlock.style.color = "black";}, 200);
   }
 
-  htmlGrid.onclick = (e) => {
+  htmlGrid.onclick = (e) => { //logic to handle click on grid
     if(e.target.className.includes("block")) {
       let block = e.target;
+      clearError();
       if(block.id === lastSelected()) {
         block.className = "block";
         selectedBlocks.pop();
@@ -32,17 +52,27 @@ document.addEventListener("DOMContentLoaded", () => {
         selectedWord.push(grid.blockVal(block.id));
         updateCurrentWord();
       } else {
-        alert("invalid move!");
+        displayError();
       }
     }
   }
 
+  submit.onclick = () => { //logic to handle submit button
+    let word = getCurrentWord();
+    if(word && isValidWord(word)) {
+      addScore(word);
+      clearBlocks();
+      updateCurrentWord();
+    }
+  }
 
-  function updateCurrentWord() {
+  //game functions
+
+  function updateCurrentWord() { //updates display of current word
     currentDisplay.innerHTML = getCurrentWord().toUpperCase();
   }
 
-  function isValidMove(id) {
+  function isValidMove(id) { //ensures block is not already been selected and is adjacent to previous block
     if(selectedBlocks.includes(id)) {
       return false;
     } else if(selectedBlocks.length === 0 || grid.isAdjacent(lastSelected(), id)) {
@@ -50,6 +80,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }  else {
       return false;
     }
+  }
+
+  function isValidWord(word) { //placeholder for validating word
+    return true;
   }
 
   function getCurrentWord() {
@@ -62,5 +96,41 @@ document.addEventListener("DOMContentLoaded", () => {
     return selectedBlocks[selectedBlocks.length - 1];
   }
 
+  function displayError() {
+    error.innerHTML = "Invalid move! Please try again.";
+  }
+
+  function clearError() {
+    error.innerHTML = "";
+  }
+
+  function clearBlocks() {
+    selectedBlocks = [];
+    selectedWord = [];
+    for(let i = 0; i < blocks.length; i++) {
+      blocks[i].className = "block";
+    }
+  }
+
+  function addScore() {  //adds to score count and adds table row
+    let word = getCurrentWord();
+    let length = word.length;
+    if (length > HIGHEST_SCORE_LENGTH) {length = HIGHEST_SCORE_LENGTH;}
+    let score = SCORE[length];
+    totalScore += score;
+    createScoreElement(word, score);
+    totalScoreDisplay.innerHTML = totalScore;
+  }
+
+  function createScoreElement(word, score) { //creates and adds the table row
+    let tr = scoreTable.insertRow(1);
+    let tdWord = document.createElement("td");
+    let tdScore = document.createElement("td");
+    tdWord.className = "word-column";
+    tdWord.innerHTML = word;
+    tdScore.innerHTML = score;
+    tr.appendChild(tdWord);
+    tr.appendChild(tdScore);
+  }
 
 });

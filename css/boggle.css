@@ -81,6 +81,13 @@ button:focus {
   display: inline;
 }
 
+#error {
+  font-weight: bold;
+  height: 20px;
+  color: darkred;
+  margin-bottom: 5px;
+}
+
 .submit-container {
   display: flex;
   margin: 0 auto;
@@ -111,4 +118,5 @@ button:focus {
 
 #total {
   background-color: lightgray;
+  font-weight: bold;
 }
