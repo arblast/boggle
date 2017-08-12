@@ -62,9 +62,9 @@
 	
 	document.addEventListener("DOMContentLoaded", () => {
 	
-	  let selectedBlocks = [];
-	  let selectedWord = [];
-	  let scoredWords = {};
+	  let selectedBlocks = []; //current selected IDs
+	  let selectedWord = []; //current selected letters
+	  let scoredWords = {}; //set for used words
 	  let totalScore = 0;
 	  const htmlGrid = document.getElementById("grid");
 	  const blocks = document.getElementsByClassName('block');
@@ -133,7 +133,7 @@
 	    }
 	  }
 	
-	  function isValidWord(word) {
+	  function isValidWord(word) { //check if word is already been used
 	    if(scoredWords[word]) {
 	      return false;
 	    } else {
@@ -242,7 +242,7 @@
 	    });
 	  }
 	
-	  placeDice() {
+	  placeDice() { //randomly place the dice on the board
 	    for(let r = 0; r < this.rows; r++) {
 	      for(let c = 0; c < this.columns; c++) {
 	        this.grid[r][c] = randArrayRemove(this.diceArray);
@@ -250,16 +250,16 @@
 	    }
 	  }
 	
-	  blockVal(id) {
+	  blockVal(id) { //returns the value of the dice at the specified ID
 	    let index = this.parseID(id);
 	    let row = index[0];
 	    let col = index[1];
 	    return this.grid[row][col].val();
 	  }
 	
-	  isAdjacent(id1, id2) {
+	  isAdjacent(id1, id2) { //checks if one dice is adjacent to another
 	    let index1 = this.parseID(id1);
-	    let index2 = this.parseID(id2); 
+	    let index2 = this.parseID(id2);
 	    if(Math.abs(index1[0] - index2[0]) <= 1 && Math.abs(index1[1] - index2[1]) <= 1) {
 	      return true;
 	    } else {
@@ -267,16 +267,7 @@
 	    }
 	  }
 	
-	  forEach(callback) {
-	    for(let r = 0; r < this.rows; r++) {
-	      for(let c = 0; c < this.columns; c++) {
-	        callback(this.grid[r][c]);
-	      }
-	    }
-	    return this.grid;
-	  }
-	
-	  parseID(id) {
+	  parseID(id) { //parses the ID into rows and columns
 	    let row = Math.floor(id/this.rows);
 	    let col = id%this.rows;
 	    return [row,col];
@@ -300,7 +291,7 @@
 	    this.roll();
 	  }
 	
-	  roll() {
+	  roll() { //randomly assigns the dice value
 	    this.value = randArray(this.sides);
 	  }
 	

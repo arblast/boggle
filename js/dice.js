@@ -7,7 +7,7 @@ class Dice {
     this.roll();
   }
 
-  roll() {
+  roll() { //randomly assigns the dice value
     this.value = randArray(this.sides);
   }
 

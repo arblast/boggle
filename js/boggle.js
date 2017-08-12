@@ -16,9 +16,9 @@ const HIGHEST_SCORE_LENGTH = 8;
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  let selectedBlocks = [];
-  let selectedWord = [];
-  let scoredWords = {};
+  let selectedBlocks = []; //current selected IDs
+  let selectedWord = []; //current selected letters
+  let scoredWords = {}; //set for used words
   let totalScore = 0;
   const htmlGrid = document.getElementById("grid");
   const blocks = document.getElementsByClassName('block');
@@ -87,7 +87,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  function isValidWord(word) {
+  function isValidWord(word) { //check if word is already been used
     if(scoredWords[word]) {
       return false;
     } else {
