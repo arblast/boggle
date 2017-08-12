@@ -64,6 +64,7 @@
 	
 	  let selectedBlocks = [];
 	  let selectedWord = [];
+	  let scoredWords = {};
 	  let totalScore = 0;
 	  const htmlGrid = document.getElementById("grid");
 	  const blocks = document.getElementsByClassName('block');
@@ -75,7 +76,8 @@
 	  const totalScoreDisplay = document.getElementById('totalScoreDisplay');
 	
 	  let grid = new Grid(NUM_ROWS,NUM_COLS);
-	  grid.placeDice();
+	
+	  grid.placeDice(); //randomly generate the board based on dice options
 	
 	  for(let i = 0; i < NUM_ROWS*NUM_COLS; i++) { //place letters on blocks
 	    let htmlBlock = blocks[i];
@@ -98,7 +100,7 @@
 	        selectedWord.push(grid.blockVal(block.id));
 	        updateCurrentWord();
 	      } else {
-	        displayError();
+	        displayError("Invalid move! Please try again.");
 	      }
 	    }
 	  }
@@ -107,8 +109,11 @@
 	    let word = getCurrentWord();
 	    if(word && isValidWord(word)) {
 	      addScore(word);
+	      clearError();
 	      clearBlocks();
 	      updateCurrentWord();
+	    } else {
+	      displayError("Word has already been used, or no word is currently selected.")
 	    }
 	  }
 	
@@ -128,8 +133,12 @@
 	    }
 	  }
 	
-	  function isValidWord(word) { //placeholder for validating word
-	    return true;
+	  function isValidWord(word) {
+	    if(scoredWords[word]) {
+	      return false;
+	    } else {
+	      return true;
+	    }
 	  }
 	
 	  function getCurrentWord() {
@@ -142,8 +151,8 @@
 	    return selectedBlocks[selectedBlocks.length - 1];
 	  }
 	
-	  function displayError() {
-	    error.innerHTML = "Invalid move! Please try again.";
+	  function displayError(message) {
+	    error.innerHTML = message;
 	  }
 	
 	  function clearError() {
@@ -158,8 +167,8 @@
 	    }
 	  }
 	
-	  function addScore() {
-	    let word = getCurrentWord();
+	  function addScore(word) {  //adds to score count and adds table row
+	    scoredWords[word] = true;
 	    let length = word.length;
 	    if (length > HIGHEST_SCORE_LENGTH) {length = HIGHEST_SCORE_LENGTH;}
 	    let score = SCORE[length];
@@ -168,7 +177,7 @@
 	    totalScoreDisplay.innerHTML = totalScore;
 	  }
 	
-	  function createScoreElement(word, score) {
+	  function createScoreElement(word, score) { //creates and adds the table row
 	    let tr = scoreTable.insertRow(1);
 	    let tdWord = document.createElement("td");
 	    let tdScore = document.createElement("td");
